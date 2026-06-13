@@ -101,13 +101,81 @@ button {
   transition: opacity 0.2s;
 }
 
-.submit-btn {
-  width: 100%;
-  padding: 14px;
-  font-size: 1rem;
-  margin-top: 10px;
+/* ... existing styles ... */
+
+.test-section {
+  background-color: var(--card-bg);
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--border-color);
+  margin-bottom: 30px;
+  text-align: center;
 }
 
-button:hover {
-  opacity: 0.9;
+.description {
+  margin-bottom: 20px;
+  color: var(--text-color);
+  opacity: 0.8;
+}
+
+.start-btn {
+  background-color: #28a745;
+  color: white;
+  margin-bottom: 20px;
+}
+
+#webcam-container {
+  margin: 20px auto;
+  border-radius: 10px;
+  overflow: hidden;
+  width: 200px;
+  height: 200px;
+  background-color: #eee;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#label-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.result-bar-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-align: left;
+}
+
+.result-label {
+  width: 80px;
+  font-weight: 600;
+}
+
+.bar-container {
+  flex-grow: 1;
+  height: 20px;
+  background-color: var(--border-color);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  background-color: var(--button-bg);
+  transition: width 0.3s ease-out;
+}
+
+.result-percent {
+  width: 45px;
+  font-size: 0.9rem;
+  text-align: right;
+}
+
+.comments-section {
+  margin-top: 50px;
 }
