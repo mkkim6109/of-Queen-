@@ -17,9 +17,16 @@
 
     <section class="test-section">
       <h2>동물상 테스트</h2>
-      <p class="description">카메라를 켜고 당신이 강아지상인지 고양이상인지 확인해보세요!</p>
-      <button type="button" class="start-btn" onclick="initTest()">테스트 시작하기</button>
-      <div id="webcam-container"></div>
+      <p class="description">당신의 사진을 업로드하고 강아지상인지 고양이상인지 확인해보세요!</p>
+      
+      <div class="upload-container">
+        <input type="file" id="image-upload" accept="image/*" onchange="handleFileUpload(event)">
+        <label for="image-upload" class="upload-label">사진 업로드하기</label>
+      </div>
+
+      <div id="image-preview-container">
+        <img id="image-preview" src="#" alt="사진 미리보기" style="display: none;">
+      </div>
       <div id="label-container"></div>
     </section>
 

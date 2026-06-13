@@ -51,64 +51,62 @@ partnershipForm.addEventListener('submit', async (e) => {
   }
 });
 
-// Teachable Machine Integration
+// Teachable Machine Integration with File Upload
 const URL = "https://teachablemachine.withgoogle.com/models/tdrEBMMYA/";
-let model, webcam, labelContainer, maxPredictions;
+let model, labelContainer, maxPredictions;
 
-async function initTest() {
-    const startBtn = document.querySelector('.start-btn');
-    startBtn.textContent = '로딩 중...';
-    startBtn.disabled = true;
+async function loadModel() {
+    if (!model) {
+        const modelURL = URL + "model.json";
+        const metadataURL = URL + "metadata.json";
+        model = await tmImage.load(modelURL, metadataURL);
+        maxPredictions = model.getTotalClasses();
+    }
+}
 
-    const modelURL = URL + "model.json";
-    const metadataURL = URL + "metadata.json";
+async function handleFileUpload(event) {
+    const file = event.target.files[0];
+    if (!file) return;
 
-    model = await tmImage.load(modelURL, metadataURL);
-    maxPredictions = model.getTotalClasses();
+    const preview = document.getElementById('image-preview');
+    const uploadLabel = document.querySelector('.upload-label');
+    const reader = new FileReader();
 
-    const flip = true;
-    webcam = new tmImage.Webcam(200, 200, flip);
-    await webcam.setup();
-    await webcam.play();
-    window.requestAnimationFrame(loop);
+    uploadLabel.textContent = '분석 중...';
+    
+    reader.onload = async function(e) {
+        preview.src = e.target.result;
+        preview.style.display = 'block';
+        
+        await loadModel();
+        await predict(preview);
+        
+        uploadLabel.textContent = '사진 변경하기';
+    };
+    
+    reader.readAsDataURL(file);
+}
 
-    document.getElementById("webcam-container").innerHTML = '';
-    document.getElementById("webcam-container").appendChild(webcam.canvas);
+async function predict(imageElement) {
+    const prediction = await model.predict(imageElement);
     labelContainer = document.getElementById("label-container");
     labelContainer.innerHTML = '';
-    for (let i = 0; i < maxPredictions; i++) {
-        const resultWrapper = document.createElement("div");
-        resultWrapper.className = "result-bar-wrapper";
-        resultWrapper.innerHTML = `
-            <div class="result-label"></div>
-            <div class="bar-container">
-                <div class="bar-fill" style="width: 0%"></div>
-            </div>
-            <div class="result-percent">0%</div>
-        `;
-        labelContainer.appendChild(resultWrapper);
-    }
     
-    startBtn.style.display = 'none';
-}
-
-async function loop() {
-    webcam.update();
-    await predict();
-    window.requestAnimationFrame(loop);
-}
-
-async function predict() {
-    const prediction = await model.predict(webcam.canvas);
     for (let i = 0; i < maxPredictions; i++) {
         const className = prediction[i].className;
         const probability = (prediction[i].probability * 100).toFixed(0);
         
-        const wrapper = labelContainer.childNodes[i];
-        wrapper.querySelector('.result-label').textContent = className;
-        wrapper.querySelector('.bar-fill').style.width = probability + "%";
-        wrapper.querySelector('.result-percent').textContent = probability + "%";
+        const resultWrapper = document.createElement("div");
+        resultWrapper.className = "result-bar-wrapper";
+        resultWrapper.innerHTML = `
+            <div class="result-label">${className}</div>
+            <div class="bar-container">
+                <div class="bar-fill" style="width: ${probability}%"></div>
+            </div>
+            <div class="result-percent">${probability}%</div>
+        `;
+        labelContainer.appendChild(resultWrapper);
     }
 }
 
-window.initTest = initTest;
+window.handleFileUpload = handleFileUpload;
