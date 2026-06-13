@@ -3,15 +3,35 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hello World</title>
+  <title>forspreea - Partnership</title>
   <link href='/style.css' rel='stylesheet'>
 </head>
 <body>
-  <h1>Hello, world!</h1>
-  <div style="margin-bottom: 20px;">
-    <button id="theme-toggle">Switch to Dark Mode</button>
+  <div class="container">
+    <header>
+      <h1>forspreea</h1>
+      <button id="theme-toggle">Switch to Dark Mode</button>
+    </header>
+
+    <section class="inquiry-section">
+      <h2>제휴 문의</h2>
+      <form id="partnership-form">
+        <div class="form-group">
+          <label for="company">업체명 / 성함</label>
+          <input type="text" id="company" name="company" required placeholder="업체명 또는 성함을 입력하세요">
+        </div>
+        <div class="form-group">
+          <label for="email">이메일 주소</label>
+          <input type="email" id="email" name="email" required placeholder="example@email.com">
+        </div>
+        <div class="form-group">
+          <label for="message">문의 내용</label>
+          <textarea id="message" name="message" rows="5" required placeholder="제휴 관련 내용을 상세히 적어주세요"></textarea>
+        </div>
+        <button type="submit" class="submit-btn">문의하기</button>
+      </form>
+    </section>
   </div>
-  <button onclick="console.log('hello');">Press me</button>
   <script defer type="text/javascript" src="/main.js"></script>
 </body>
 </html>
