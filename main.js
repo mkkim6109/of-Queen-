@@ -6,50 +6,56 @@ const partnershipForm = document.getElementById('partnership-form');
 const savedTheme = localStorage.getItem('theme') || 'light';
 if (savedTheme === 'dark') {
   body.setAttribute('data-theme', 'dark');
-  themeToggle.textContent = 'Switch to Light Mode';
+  if (themeToggle) {
+    themeToggle.textContent = 'Switch to Light Mode';
+  }
 }
 
-themeToggle.addEventListener('click', () => {
-  const currentTheme = body.getAttribute('data-theme');
-  
-  if (currentTheme === 'dark') {
-    body.removeAttribute('data-theme');
-    themeToggle.textContent = 'Switch to Dark Mode';
-    localStorage.setItem('theme', 'light');
-  } else {
-    body.setAttribute('data-theme', 'dark');
-    themeToggle.textContent = 'Switch to Light Mode';
-    localStorage.setItem('theme', 'dark');
-  }
-});
+if (themeToggle) {
+  themeToggle.addEventListener('click', () => {
+    const currentTheme = body.getAttribute('data-theme');
+    
+    if (currentTheme === 'dark') {
+      body.removeAttribute('data-theme');
+      themeToggle.textContent = 'Switch to Dark Mode';
+      localStorage.setItem('theme', 'light');
+    } else {
+      body.setAttribute('data-theme', 'dark');
+      themeToggle.textContent = 'Switch to Light Mode';
+      localStorage.setItem('theme', 'dark');
+    }
+  });
+}
 
 // Form Submission Handling via AJAX
-partnershipForm.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const submitBtn = partnershipForm.querySelector('.submit-btn');
-  const originalText = submitBtn.textContent;
-  submitBtn.textContent = '보내는 중...';
-  submitBtn.disabled = true;
-  const formData = new FormData(partnershipForm);
-  try {
-    const response = await fetch(partnershipForm.action, {
-      method: 'POST',
-      body: formData,
-      headers: { 'Accept': 'application/json' }
-    });
-    if (response.ok) {
-      alert('제휴 문의가 성공적으로 전송되었습니다. 확인 후 연락드리겠습니다!');
-      partnershipForm.reset();
-    } else {
-      alert('전송 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.');
+if (partnershipForm) {
+  partnershipForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const submitBtn = partnershipForm.querySelector('.submit-btn');
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = '보내는 중...';
+    submitBtn.disabled = true;
+    const formData = new FormData(partnershipForm);
+    try {
+      const response = await fetch(partnershipForm.action, {
+        method: 'POST',
+        body: formData,
+        headers: { 'Accept': 'application/json' }
+      });
+      if (response.ok) {
+        alert('제휴 문의가 성공적으로 전송되었습니다. 확인 후 연락드리겠습니다!');
+        partnershipForm.reset();
+      } else {
+        alert('전송 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.');
+      }
+    } catch (error) {
+      alert('네트워크 오류가 발생했습니다.');
+    } finally {
+      submitBtn.textContent = originalText;
+      submitBtn.disabled = false;
     }
-  } catch (error) {
-    alert('네트워크 오류가 발생했습니다.');
-  } finally {
-    submitBtn.textContent = originalText;
-    submitBtn.disabled = false;
-  }
-});
+  });
+}
 
 // Teachable Machine Integration with File Upload
 const URL = "https://teachablemachine.withgoogle.com/models/tdrEBMMYA/";
@@ -128,7 +134,6 @@ function shareKakao() {
       url: siteUrl
     }).catch(console.error);
   } else {
-    // If Web Share API is not supported on desktop, copy URL and notify user
     copyToClipboard('카카오톡 등으로 공유하실 수 있도록 링크가 복사되었습니다!');
   }
 }
@@ -147,7 +152,6 @@ function copyToClipboard(customMessage) {
   navigator.clipboard.writeText(siteUrl).then(() => {
     showToast(customMessage || '링크가 클립보드에 복사되었습니다!');
   }).catch(() => {
-    // Fallback for older browsers
     const textArea = document.createElement("textarea");
     textArea.value = siteUrl;
     document.body.appendChild(textArea);
@@ -173,7 +177,24 @@ function showToast(message) {
   }
 }
 
-// Expose sharing functions to window scope for onclick handlers
+// Disqus Lazy Loading using Intersection Observer
+const disqusThread = document.getElementById('disqus_thread');
+if (disqusThread) {
+  const observer = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const d = document, s = d.createElement('script');
+        s.src = 'https://of-queen.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { rootMargin: "200px" });
+  observer.observe(disqusThread);
+}
+
+// Expose functions to window scope
 window.shareKakao = shareKakao;
 window.shareTwitter = shareTwitter;
 window.shareFacebook = shareFacebook;

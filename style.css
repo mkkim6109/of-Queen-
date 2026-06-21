@@ -209,6 +209,46 @@ input, textarea {
   .hero-section h1 { font-size: 1.8rem; }
 }
 
+/* FAQ Section */
+.faq-section {
+  text-align: left;
+}
+
+.faq-item {
+  margin-bottom: 24px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.faq-item:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.faq-item h3 {
+  font-size: 1.05rem;
+  margin-bottom: 8px;
+  color: var(--button-bg);
+}
+
+.faq-item p {
+  margin: 0;
+  line-height: 1.7;
+  opacity: 0.9;
+}
+
+.hero-subtitle {
+  font-size: 1.15rem;
+  margin-bottom: 8px;
+}
+
+.hero-meta {
+  font-size: 0.85rem;
+  opacity: 0.7;
+  margin-top: 0;
+}
+
 /* Share Buttons */
 .share-container {
   margin-top: 30px;
