@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mkkim6109.github.io/of-Queen-/sitemap.xml
