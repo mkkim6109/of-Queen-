@@ -33,6 +33,11 @@
   <meta property="og:title" content="forspreea - AI 동물상 테스트 및 제휴 문의">
   <meta property="og:description" content="인공지능(AI)을 활용한 정확한 동물상 테스트! 강아지상, 고양이상을 확인하고 다양한 제휴 문의를 남겨보세요.">
   <meta property="og:image" content="https://of-queen.pages.dev/og_image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="675">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:alt" content="forspreea AI 동물상 테스트 메인 이미지 (강아지상 vs 고양이상 분석)">
+  <meta property="og:site_name" content="forspreea">
   <meta property="og:locale" content="ko_KR">
 
   <!-- Twitter -->
@@ -41,6 +46,7 @@
   <meta name="twitter:title" content="forspreea - AI 동물상 테스트 및 제휴 문의">
   <meta name="twitter:description" content="인공지능(AI)을 활용한 정확한 동물상 테스트! 강아지상, 고양이상을 확인하고 다양한 제휴 문의를 남겨보세요.">
   <meta name="twitter:image" content="https://of-queen.pages.dev/og_image.jpg">
+  <meta name="twitter:image:alt" content="forspreea AI 동물상 테스트 메인 이미지 (강아지상 vs 고양이상 분석)">
 
   <!-- Structured Data (JSON-LD) -->
   <script type="application/ld+json">
@@ -99,6 +105,24 @@
         <img id="image-preview" src="#" alt="사진 미리보기" style="display: none;">
       </div>
       <div id="label-container"></div>
+
+      <div id="share-container" class="share-container" style="display: none;">
+        <h3>친구에게 공유하기</h3>
+        <div class="share-buttons">
+          <button onclick="shareKakao()" class="share-btn kakao-btn" aria-label="카카오톡 공유">
+            <span class="share-icon">💬</span> 카카오톡
+          </button>
+          <button onclick="shareTwitter()" class="share-btn twitter-btn" aria-label="트위터 공유">
+            <span class="share-icon">𝕏</span> 트위터
+          </button>
+          <button onclick="shareFacebook()" class="share-btn facebook-btn" aria-label="페이스북 공유">
+            <span class="share-icon">📘</span> 페이스북
+          </button>
+          <button onclick="copyToClipboard()" class="share-btn copy-btn" aria-label="링크 복사">
+            <span class="share-icon">🔗</span> 링크 복사
+          </button>
+        </div>
+      </div>
     </section>
 
     <!-- AdSense Space -->
@@ -167,6 +191,7 @@
   </footer>
 
   <script id="dsq-count-scr" src="//of-queen.disqus.com/count.js" async></script>
+  <div id="toast" class="toast">링크가 복사되었습니다!</div>
   <script defer type="text/javascript" src="/main.js"></script>
 </body>
 </html>

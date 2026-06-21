@@ -107,6 +107,75 @@ async function predict(imageElement) {
         `;
         labelContainer.appendChild(resultWrapper);
     }
+
+    // Show social sharing container
+    const shareContainer = document.getElementById("share-container");
+    if (shareContainer) {
+        shareContainer.style.display = "block";
+    }
 }
 
+// Social Sharing Logic
+const siteUrl = 'https://of-queen.pages.dev/';
+const shareTitle = 'AI 동물상 테스트 - 포스프리아(forspreea)';
+const shareText = '구글 인공지능이 알려주는 나의 동물상은? 지금 쉽고 빠르게 확인해보세요!';
+
+function shareKakao() {
+  if (navigator.share) {
+    navigator.share({
+      title: shareTitle,
+      text: shareText,
+      url: siteUrl
+    }).catch(console.error);
+  } else {
+    // If Web Share API is not supported on desktop, copy URL and notify user
+    copyToClipboard('카카오톡 등으로 공유하실 수 있도록 링크가 복사되었습니다!');
+  }
+}
+
+function shareTwitter() {
+  const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareTitle + '\n' + shareText)}&url=${encodeURIComponent(siteUrl)}`;
+  window.open(url, '_blank', 'width=600,height=400');
+}
+
+function shareFacebook() {
+  const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(siteUrl)}`;
+  window.open(url, '_blank', 'width=600,height=400');
+}
+
+function copyToClipboard(customMessage) {
+  navigator.clipboard.writeText(siteUrl).then(() => {
+    showToast(customMessage || '링크가 클립보드에 복사되었습니다!');
+  }).catch(() => {
+    // Fallback for older browsers
+    const textArea = document.createElement("textarea");
+    textArea.value = siteUrl;
+    document.body.appendChild(textArea);
+    textArea.select();
+    try {
+      document.execCommand('copy');
+      showToast(customMessage || '링크가 클립보드에 복사되었습니다!');
+    } catch (err) {
+      alert('링크 복사에 실패했습니다. 수동으로 복사해주세요: ' + siteUrl);
+    }
+    document.body.removeChild(textArea);
+  });
+}
+
+function showToast(message) {
+  const toast = document.getElementById("toast");
+  if (toast) {
+    toast.textContent = message;
+    toast.classList.add("show");
+    setTimeout(() => {
+      toast.classList.remove("show");
+    }, 2500);
+  }
+}
+
+// Expose sharing functions to window scope for onclick handlers
+window.shareKakao = shareKakao;
+window.shareTwitter = shareTwitter;
+window.shareFacebook = shareFacebook;
+window.copyToClipboard = copyToClipboard;
 window.handleFileUpload = handleFileUpload;

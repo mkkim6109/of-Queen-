@@ -208,3 +208,112 @@ input, textarea {
   .nav-menu { display: none; } /* Simplified for mobile */
   .hero-section h1 { font-size: 1.8rem; }
 }
+
+/* Share Buttons */
+.share-container {
+  margin-top: 30px;
+  padding-top: 25px;
+  border-top: 1px dashed var(--border-color);
+  text-align: center;
+}
+
+.share-container h3 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 1.2rem;
+}
+
+.share-buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.share-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 8px;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, background-color 0.2s, border-color 0.2s;
+  box-sizing: border-box;
+}
+
+.share-btn:hover {
+  transform: translateY(-2px);
+  background-color: var(--bg-color);
+}
+
+.share-icon {
+  font-size: 1.5rem;
+}
+
+.share-btn.kakao-btn {
+  border-color: #fee500;
+  background-color: #fee500;
+  color: #191919;
+}
+.share-btn.kakao-btn:hover {
+  background-color: #fdd835;
+}
+
+.share-btn.twitter-btn {
+  border-color: var(--border-color);
+}
+.share-btn.twitter-btn:hover {
+  background-color: rgba(29, 161, 242, 0.1);
+  border-color: #1da1f2;
+}
+
+.share-btn.facebook-btn {
+  border-color: var(--border-color);
+}
+.share-btn.facebook-btn:hover {
+  background-color: rgba(24, 119, 242, 0.1);
+  border-color: #1877f2;
+}
+
+.share-btn.copy-btn {
+  border-color: var(--border-color);
+}
+.share-btn.copy-btn:hover {
+  background-color: rgba(24, 119, 242, 0.1);
+  border-color: var(--button-bg);
+}
+
+@media (max-width: 480px) {
+  .share-buttons {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Toast Notification */
+.toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background-color: rgba(0, 0, 0, 0.85);
+  color: #ffffff;
+  padding: 12px 24px;
+  border-radius: 30px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  z-index: 2000;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  pointer-events: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.toast.show {
+  transform: translateX(-50%) translateY(0);
+}
